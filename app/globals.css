@@ -1,0 +1,117 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --ink: #0d0b09;
+  --surface: #15110d;
+  --surface-2: #1d1813;
+  --line: rgba(214, 198, 170, 0.12);
+  --line-strong: rgba(214, 198, 170, 0.24);
+  --paper: #f3ecde;
+  --muted: #9a9082;
+  --ember: #d8a24a;
+  --danger: #d4604a;
+}
+
+@layer base {
+  body {
+    background-color: var(--ink);
+    color: var(--paper);
+    font-family: var(--font-sans), system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  ::selection {
+    background: var(--ember);
+    color: var(--ink);
+  }
+
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--ink);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--surface-2);
+    border: 2px solid var(--ink);
+    border-radius: 999px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #2a231b;
+  }
+
+  /* Keep typed + autofilled text readable on the dark theme.
+     (Browser autofill otherwise paints a white box with near-white text.) */
+  input,
+  textarea {
+    color: var(--paper);
+    caret-color: var(--ember);
+  }
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus {
+    -webkit-text-fill-color: var(--paper);
+    -webkit-box-shadow: 0 0 0 1000px var(--surface) inset;
+    caret-color: var(--ember);
+    transition: background-color 9999s ease-in-out 0s;
+  }
+}
+
+/* Film-grain texture — fixed overlay for darkroom atmosphere */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  pointer-events: none;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Vignette to focus the frame */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: radial-gradient(
+    120% 90% at 50% -10%,
+    transparent 45%,
+    rgba(0, 0, 0, 0.55) 100%
+  );
+}
+
+/* Warm top glow behind the page header */
+.glow-top {
+  position: relative;
+}
+.glow-top::before {
+  content: "";
+  position: absolute;
+  top: -120px;
+  left: 50%;
+  width: 720px;
+  height: 360px;
+  transform: translateX(-50%);
+  pointer-events: none;
+  background: radial-gradient(
+    50% 50% at 50% 50%,
+    rgba(216, 162, 74, 0.16),
+    transparent 70%
+  );
+  filter: blur(8px);
+}
+
+.hairline {
+  background-image: linear-gradient(
+    to right,
+    transparent,
+    var(--line-strong),
+    transparent
+  );
+  height: 1px;
+}
